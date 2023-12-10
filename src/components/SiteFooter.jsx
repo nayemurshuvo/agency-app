@@ -1,6 +1,17 @@
 import Link from "next/link";
 
-const SiteFooter = () => {
+async function getData(){
+    const res = await fetch(process.env.BASE_URL+"api/SocialLink");
+    if(!res.ok){
+        throw new Error("Social Link calling Fail");
+    }
+    return res.json();
+}
+
+
+const SiteFooter = async () => {
+
+    const data = await getData();
     return (
         <section>
             <div className="skew skew-top mr-for-radius">
@@ -13,6 +24,7 @@ const SiteFooter = () => {
                     <polygon fill="currentColor" points="0 10 10 0 10 10" />
                 </svg>
             </div>
+
             <div className="py-20 bg-gray-900 radius-for-skewed">
                 <div className="container mx-auto px-4">
                     <div className="pb-12 flex flex-wrap items-center justify-between border-b border-gray-800">
@@ -75,19 +87,22 @@ const SiteFooter = () => {
                         <p className="order-last text-sm text-gray-400">© 2024. All rights reserved.
                         </p>
                         <div className="mb-4 lg:mb-0 order-first lg:order-last">
-                            <a className="inline-block mr-2 p-2 bg-gray-800 hover:bg-gray-700 rounded" href="#">
+                            <Link className="inline-block mr-2 p-2 bg-gray-800 hover:bg-gray-700 rounded" href={data[0]['link']}>
                                 <img src="atis-assets/social/facebook.svg" />
-                            </a>
-                            <a className="inline-block mr-2 p-2 bg-gray-800 hover:bg-gray-700 rounded" href="#">
+                            </Link>
+                            <a className="inline-block mr-2 p-2 bg-gray-800 hover:bg-gray-700 rounded" href={data[1]['link']}>
                                 <img src="atis-assets/social/twitter.svg" />
                             </a>
-                            <a className="inline-block mr-2 p-2 bg-gray-800 hover:bg-gray-700 rounded" href="#">
+                            <a className="inline-block mr-2 p-2 bg-gray-800 hover:bg-gray-700 rounded" href={data[2]['link']}>
                                 <img src="atis-assets/social/instagram.svg" />
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
             <div className="skew skew-bottom mr-for-radius">
                 <svg className="h-8 md:h-12 lg:h-20 w-full text-gray-900" viewBox="0 0 10 10" preserveAspectRatio="none">
                     <polygon fill="currentColor" points="0 0 10 0 0 10" />
