@@ -1,7 +1,14 @@
 export async function generateMetadata(){
-    // SEO Data Fetch
+    const res = await fetch(process.env.BASE_URL+"api/SiteMeta/services");
+    const JSON=await res.json();
+
     return{
-        title:"Services"
+        title:JSON[0]['title'],
+        description:JSON[0]['description'],
+        keywords:JSON[0]['keywords'],
+        openGraph:{
+            images: JSON[0]['image']
+        }
     }
 }
 
